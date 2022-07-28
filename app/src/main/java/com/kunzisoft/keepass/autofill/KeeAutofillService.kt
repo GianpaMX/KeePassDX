@@ -29,7 +29,6 @@ import android.os.CancellationSignal
 import android.service.autofill.*
 import android.util.Log
 import android.view.autofill.AutofillId
-import android.view.inputmethod.InlineSuggestionsRequest
 import android.widget.RemoteViews
 import androidx.annotation.RequiresApi
 import androidx.autofill.inline.UiVersions
@@ -325,7 +324,8 @@ class KeeAutofillService : AutofillService() {
                                 parseResult.creditCardNumber,
                                 expiration,
                                 parseResult.cardVerificationValue
-                            ))
+                            )
+                    )
 
                     // TODO Callback in each activity #765
                     //if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {

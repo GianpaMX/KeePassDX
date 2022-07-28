@@ -241,7 +241,8 @@ class AutofillLauncherActivity : DatabaseModeActivity() {
         }
 
         fun getPendingIntentForRegistration(context: Context,
-                                            registerInfo: RegisterInfo): PendingIntent {
+                                            registerInfo: RegisterInfo
+        ): PendingIntent {
             return PendingIntent.getActivity(context, 0,
                 Intent(context, AutofillLauncherActivity::class.java).apply {
                     EntrySelectionHelper.addSpecialModeInIntent(this, SpecialMode.REGISTRATION)
@@ -255,7 +256,8 @@ class AutofillLauncherActivity : DatabaseModeActivity() {
         }
 
         fun launchForRegistration(context: Context,
-                                  registerInfo: RegisterInfo) {
+                                  registerInfo: RegisterInfo
+        ) {
             val intent = Intent(context, AutofillLauncherActivity::class.java)
             EntrySelectionHelper.addSpecialModeInIntent(intent, SpecialMode.REGISTRATION)
             intent.putExtra(KEY_REGISTER_INFO, registerInfo)

@@ -32,7 +32,6 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import com.kunzisoft.keepass.R
-import com.kunzisoft.keepass.activities.dialogs.DatabaseDialogFragment
 import com.kunzisoft.keepass.activities.dialogs.DeleteNodesDialogFragment
 import com.kunzisoft.keepass.activities.dialogs.PasswordEncodingDialogFragment
 import com.kunzisoft.keepass.activities.helpers.EntrySelectionHelper
@@ -237,12 +236,14 @@ abstract class DatabaseLockActivity : DatabaseModeActivity(),
     }
 
     override fun onPasswordEncodingValidateListener(databaseUri: Uri?,
-                                                    mainCredential: MainCredential) {
+                                                    mainCredential: MainCredential
+    ) {
         assignDatabasePassword(databaseUri, mainCredential)
     }
 
     private fun assignDatabasePassword(databaseUri: Uri?,
-                                       mainCredential: MainCredential) {
+                                       mainCredential: MainCredential
+    ) {
         if (databaseUri != null) {
             mDatabaseTaskProvider?.startDatabaseAssignPassword(databaseUri, mainCredential)
         }
@@ -354,7 +355,8 @@ abstract class DatabaseLockActivity : DatabaseModeActivity(),
     }
 
     fun updateGroup(oldGroup: Group,
-                    groupInfo: GroupInfo) {
+                    groupInfo: GroupInfo
+    ) {
         // If group updated save it in the database
         val updateGroup = Group(oldGroup).let { updateGroup ->
             updateGroup.apply {

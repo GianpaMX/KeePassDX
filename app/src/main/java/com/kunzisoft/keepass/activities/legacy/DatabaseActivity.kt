@@ -52,7 +52,8 @@ abstract class DatabaseActivity: StylishActivity(), DatabaseRetrieval {
     }
 
     fun createDatabase(databaseUri: Uri,
-                       mainCredential: MainCredential) {
+                       mainCredential: MainCredential
+    ) {
         mDatabaseTaskProvider?.startDatabaseCreate(databaseUri, mainCredential)
     }
 

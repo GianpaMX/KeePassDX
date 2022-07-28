@@ -24,12 +24,12 @@ import com.kunzisoft.keepass.database.element.Database
 import com.kunzisoft.keepass.database.element.database.CompressionAlgorithm
 
 class UpdateCompressionBinariesDatabaseRunnable (
-        context: Context,
-        database: Database,
-        private val oldCompressionAlgorithm: CompressionAlgorithm,
-        private val newCompressionAlgorithm: CompressionAlgorithm,
-        saveDatabase: Boolean)
-    : SaveDatabaseRunnable(context, database, saveDatabase) {
+    context: Context,
+    database: Database,
+    private val oldCompressionAlgorithm: CompressionAlgorithm,
+    private val newCompressionAlgorithm: CompressionAlgorithm,
+    saveDatabase: Boolean)
+    : com.kunzisoft.keepass.database.action.SaveDatabaseRunnable(context, database, saveDatabase) {
 
     override fun onStartRun() {
         // Set new compression

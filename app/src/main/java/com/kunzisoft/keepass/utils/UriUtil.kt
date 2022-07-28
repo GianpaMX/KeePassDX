@@ -64,53 +64,14 @@ object UriUtil {
     }
 
     @Throws(FileNotFoundException::class)
-    fun getUriOutputStream(contentResolver: ContentResolver, fileUri: Uri?): OutputStream? {
-        if (fileUri == null)
-            return null
-        return when {
-            isFileScheme(fileUri) -> fileUri.path?.let { FileOutputStream(it) }
-            isContentScheme(fileUri) -> {
-                try {
-                    contentResolver.openOutputStream(fileUri, "wt")
-                } catch (e: FileNotFoundException) {
-                    Log.e(TAG, "Unable to open stream in `wt` mode, retry in `rwt` mode.", e)
-                    // https://issuetracker.google.com/issues/180526528
-                    // Try with rwt to fix content provider issue
-                    val outStream = contentResolver.openOutputStream(fileUri, "rwt")
-                    Log.w(TAG, "`rwt` mode used.")
-                    outStream
-                }
-            }
-            else -> null
-        }
-    }
+    fun getUriOutputStream(contentResolver: ContentResolver, fileUri: Uri?) = DatabaseUriUtil.getUriOutputStream(contentResolver, fileUri)
 
     @Throws(FileNotFoundException::class)
-    fun getUriInputStream(contentResolver: ContentResolver, fileUri: Uri?): InputStream? {
-        if (fileUri == null)
-            return null
-        return when {
-            isFileScheme(fileUri) -> fileUri.path?.let { FileInputStream(it) }
-            isContentScheme(fileUri) -> contentResolver.openInputStream(fileUri)
-            else -> null
-        }
-    }
+    fun getUriInputStream(contentResolver: ContentResolver, fileUri: Uri?) = DatabaseUriUtil.getUriInputStream(contentResolver, fileUri)
 
-    private fun isFileScheme(fileUri: Uri): Boolean {
-        val scheme = fileUri.scheme
-        if (scheme == null || scheme.isEmpty() || scheme.lowercase(Locale.ENGLISH) == "file") {
-            return true
-        }
-        return false
-    }
+    private fun isFileScheme(fileUri: Uri) = DatabaseUriUtil.isFileScheme(fileUri)
 
-    private fun isContentScheme(fileUri: Uri): Boolean {
-        val scheme = fileUri.scheme
-        if (scheme != null && scheme.lowercase(Locale.ENGLISH) == "content") {
-            return true
-        }
-        return false
-    }
+    private fun isContentScheme(fileUri: Uri) = DatabaseUriUtil.isContentScheme2(fileUri)
 
     fun parse(stringUri: String?): Uri? {
         return if (stringUri?.isNotEmpty() == true) {
@@ -308,13 +269,7 @@ object UriUtil {
         }
     }
 
-    fun getBinaryDir(context: Context): File {
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            context.applicationContext.noBackupFilesDir
-        } else {
-            context.applicationContext.filesDir
-        }
-    }
+    fun getBinaryDir(context: Context) = DatabaseUriUtil.getBinaryDir(context)
 
     private const val TAG = "UriUtil"
 }

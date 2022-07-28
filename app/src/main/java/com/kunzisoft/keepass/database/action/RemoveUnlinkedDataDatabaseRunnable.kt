@@ -26,7 +26,7 @@ class RemoveUnlinkedDataDatabaseRunnable (
         context: Context,
         database: Database,
         saveDatabase: Boolean)
-    : SaveDatabaseRunnable(context, database, saveDatabase) {
+    : com.kunzisoft.keepass.database.action.SaveDatabaseRunnable(context, database, saveDatabase) {
 
     override fun onActionRun() {
         try {

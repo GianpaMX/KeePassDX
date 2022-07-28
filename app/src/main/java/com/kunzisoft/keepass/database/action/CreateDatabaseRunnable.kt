@@ -35,7 +35,7 @@ class CreateDatabaseRunnable(context: Context,
                              private val templateGroupName: String?,
                              mainCredential: MainCredential,
                              private val createDatabaseResult: ((Result) -> Unit)?)
-    : AssignMainCredentialInDatabaseRunnable(context, mDatabase, databaseUri, mainCredential) {
+    : com.kunzisoft.keepass.database.action.AssignMainCredentialInDatabaseRunnable(context, mDatabase, databaseUri, mainCredential) {
 
     override fun onStartRun() {
         try {

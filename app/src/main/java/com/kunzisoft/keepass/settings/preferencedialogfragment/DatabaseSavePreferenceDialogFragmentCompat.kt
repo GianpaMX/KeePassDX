@@ -91,7 +91,8 @@ abstract class DatabaseSavePreferenceDialogFragmentCompat
     }
 
     protected fun saveCompression(oldCompression: CompressionAlgorithm,
-                                  newCompression: CompressionAlgorithm) {
+                                  newCompression: CompressionAlgorithm
+    ) {
         mDatabaseViewModel.saveCompression(oldCompression, newCompression, mDatabaseAutoSaveEnable)
     }
 

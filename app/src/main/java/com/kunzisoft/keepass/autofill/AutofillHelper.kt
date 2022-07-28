@@ -215,7 +215,8 @@ object AutofillHelper {
      */
     private fun buildIconFromEntry(context: Context,
                                    database: Database,
-                                   entryInfo: EntryInfo): Icon? {
+                                   entryInfo: EntryInfo
+    ): Icon? {
         try {
             database.iconDrawableFactory.getBitmapFromIcon(context,
                     entryInfo.icon, ContextCompat.getColor(context, R.color.green))?.let { bitmap ->
@@ -233,7 +234,8 @@ object AutofillHelper {
                                                 database: Database,
                                                 compatInlineSuggestionsRequest: CompatInlineSuggestionsRequest,
                                                 positionItem: Int,
-                                                entryInfo: EntryInfo): InlinePresentation? {
+                                                entryInfo: EntryInfo
+    ): InlinePresentation? {
         compatInlineSuggestionsRequest.inlineSuggestionsRequest?.let { inlineSuggestionsRequest ->
             val inlinePresentationSpecs = inlineSuggestionsRequest.inlinePresentationSpecs
             val maxSuggestion = inlineSuggestionsRequest.maxSuggestionCount
@@ -396,7 +398,8 @@ object AutofillHelper {
      */
     fun buildResponseAndSetResult(activity: Activity,
                                   database: Database,
-                                  entryInfo: EntryInfo) {
+                                  entryInfo: EntryInfo
+    ) {
         buildResponseAndSetResult(activity, database, ArrayList<EntryInfo>().apply { add(entryInfo) })
     }
 

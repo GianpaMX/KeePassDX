@@ -1102,14 +1102,16 @@ class GroupActivity : DatabaseLockActivity(),
     }
 
     override fun onAskMainCredentialDialogPositiveClick(databaseUri: Uri?,
-                                                        mainCredential: MainCredential) {
+                                                        mainCredential: MainCredential
+    ) {
         databaseUri?.let {
             mergeDatabaseFrom(it, mainCredential)
         }
     }
 
     override fun onAskMainCredentialDialogNegativeClick(databaseUri: Uri?,
-                                                        mainCredential: MainCredential) { }
+                                                        mainCredential: MainCredential
+    ) { }
 
     override fun onResume() {
         super.onResume()
