@@ -76,6 +76,7 @@ import com.kunzisoft.keepass.view.asError
 import com.kunzisoft.keepass.viewmodels.AdvancedUnlockViewModel
 import com.kunzisoft.keepass.viewmodels.DatabaseFileViewModel
 import java.io.FileNotFoundException
+import com.kunzisoft.keepass.database.exception.getLocalizedMessage
 
 
 class MainCredentialActivity : DatabaseModeActivity(), AdvancedUnlockFragment.BuilderListener {

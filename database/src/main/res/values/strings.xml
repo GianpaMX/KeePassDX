@@ -1,20 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="error_load_database">Could not load your database.</string>
-    <string name="file_not_found_content">Could not find file. Try reopening it from your file browser.</string>
-    <string name="invalid_algorithm">Wrong algorithm.</string>
-    <string name="invalid_db_same_uuid">%1$s with the same UUID %2$s already exists.</string>
-    <string name="error_load_database_KDF_memory">Could not load the key. Try to lower the KDF \"Memory Usage\".</string>
-    <string name="invalid_db_sig">Could not recognize the database format.</string>
-    <string name="unsupported_db_version">Unsupported database version.</string>
-    <string name="invalid_credentials">Could not read credentials.</string>
-    <string name="error_out_of_memory">No memory to load your entire database.</string>
-    <string name="error_move_entry_here">You cannot move an entry here.</string>
-    <string name="error_move_group_here">You cannot move a group here.</string>
-    <string name="error_copy_entry_here">You cannot copy an entry here.</string>
-    <string name="error_copy_group_here">You cannot copy a group here.</string>
-    <string name="error_save_database">Could not save database.</string>
-
     <string name="retrieving_db_key">Retrieving database key…</string>
     <string name="decrypting_db">Decrypting database content…</string>
 
@@ -27,5 +12,4 @@
     <string name="timeout_backup_key" translatable="false">timeout_backup_key</string>
     <string name="app_timeout_key" translatable="false">app_timeout_key</string>
     <string name="timeout_default" translatable="false">300000</string>
-
 </resources>
