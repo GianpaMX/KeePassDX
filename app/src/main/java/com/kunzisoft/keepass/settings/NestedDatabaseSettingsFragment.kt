@@ -38,6 +38,7 @@ import com.kunzisoft.keepass.database.crypto.kdf.KdfEngine
 import com.kunzisoft.keepass.database.element.Database
 import com.kunzisoft.keepass.database.element.Group
 import com.kunzisoft.keepass.database.element.database.CompressionAlgorithm
+import com.kunzisoft.keepass.database.element.database.getName
 import com.kunzisoft.keepass.database.element.template.TemplateEngine
 import com.kunzisoft.keepass.services.DatabaseTaskNotificationService
 import com.kunzisoft.keepass.settings.preference.*
@@ -198,8 +199,8 @@ class NestedDatabaseSettingsFragment : NestedSettingsFragment(), DatabaseRetriev
         // Database compression
         dbDataCompressionPref = findPreference(getString(R.string.database_data_compression_key))
         if (database.allowDataCompression) {
-            dbDataCompressionPref?.summary = (database.compressionAlgorithm
-                ?: CompressionAlgorithm.None).getName(resources)
+            dbDataCompressionPref?.summary = database.compressionAlgorithm?.getName(resources)
+                ?: CompressionAlgorithm.None.getName(resources)
         } else {
             dbCompressionPrefCategory?.isVisible = false
         }
@@ -439,7 +440,7 @@ class NestedDatabaseSettingsFragment : NestedSettingsFragment(), DatabaseRetriev
                                 if (result.isSuccess) {
                                     newCompression
                                 } else {
-                                    mDatabase?.compressionAlgorithm = oldCompression
+                                    mDatabase?.compressionAlgorithm = oldCompression.toDatabaseEnum()
                                     oldCompression
                                 }
                         dbDataCompressionPref?.summary = algorithmToShow.getName(resources)

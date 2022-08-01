@@ -3,7 +3,7 @@ package com.kunzisoft.keepass.database.element.database
 import android.content.res.Resources
 import android.os.Parcel
 import android.os.Parcelable
-import com.kunzisoft.keepass.database.R
+import com.kunzisoft.keepass.R
 import com.kunzisoft.keepass.utils.ObjectNameResource
 import com.kunzisoft.keepass.utils.readEnum
 import com.kunzisoft.keepass.utils.writeEnum
@@ -12,7 +12,6 @@ import com.kunzisoft.keepass.utils.writeEnum
 //       since we won't do arithmetic on these values (also unlikely to
 //       reach negative ids).
 enum class CompressionAlgorithm : ObjectNameResource, Parcelable {
-
     None,
     GZip;
 
@@ -41,4 +40,21 @@ enum class CompressionAlgorithm : ObjectNameResource, Parcelable {
         }
     }
 
+    fun toDatabaseEnum(): CompressionAlgorithmEnum = when (this) {
+        None -> CompressionAlgorithmEnum.None
+        GZip -> CompressionAlgorithmEnum.GZip
+    }
+
+}
+
+fun CompressionAlgorithmEnum.getName(resources: Resources): String {
+    return when (this) {
+        CompressionAlgorithmEnum.None -> resources.getString(R.string.compression_none)
+        CompressionAlgorithmEnum.GZip -> resources.getString(R.string.compression_gzip)
+    }
+}
+
+fun CompressionAlgorithmEnum.toAppEnum(): CompressionAlgorithm = when (this) {
+    CompressionAlgorithmEnum.None -> CompressionAlgorithm.None
+    CompressionAlgorithmEnum.GZip -> CompressionAlgorithm.GZip
 }

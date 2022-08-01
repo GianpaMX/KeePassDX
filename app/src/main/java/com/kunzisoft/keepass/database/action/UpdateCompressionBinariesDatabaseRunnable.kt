@@ -36,8 +36,8 @@ class UpdateCompressionBinariesDatabaseRunnable (
         if (database.allowDataCompression) {
             try {
                 database.apply {
-                    updateDataBinaryCompression(oldCompressionAlgorithm, newCompressionAlgorithm)
-                    compressionAlgorithm = newCompressionAlgorithm
+                    updateDataBinaryCompression(oldCompressionAlgorithm.toDatabaseEnum(), newCompressionAlgorithm.toDatabaseEnum())
+                    compressionAlgorithm = newCompressionAlgorithm.toDatabaseEnum()
                 }
             } catch (e: Exception) {
                 setError(e)
@@ -54,8 +54,8 @@ class UpdateCompressionBinariesDatabaseRunnable (
             if (!result.isSuccess) {
                 try {
                     database.apply {
-                        compressionAlgorithm = oldCompressionAlgorithm
-                        updateDataBinaryCompression(newCompressionAlgorithm, oldCompressionAlgorithm)
+                        compressionAlgorithm = oldCompressionAlgorithm.toDatabaseEnum()
+                        updateDataBinaryCompression(newCompressionAlgorithm.toDatabaseEnum(), oldCompressionAlgorithm.toDatabaseEnum())
                     }
                 } catch (e: Exception) {
                     setError(e)

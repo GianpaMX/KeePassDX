@@ -27,7 +27,7 @@ import com.kunzisoft.keepass.database.crypto.CrsAlgorithm
 import com.kunzisoft.keepass.database.crypto.HmacBlock
 import com.kunzisoft.keepass.database.element.*
 import com.kunzisoft.keepass.database.element.binary.BinaryData
-import com.kunzisoft.keepass.database.element.database.CompressionAlgorithm
+import com.kunzisoft.keepass.database.element.database.CompressionAlgorithmEnum
 import com.kunzisoft.keepass.database.element.database.DatabaseKDBX
 import com.kunzisoft.keepass.database.element.database.DatabaseKDBX.Companion.BASE_64_FLAG
 import com.kunzisoft.keepass.database.element.database.DatabaseVersioned
@@ -176,7 +176,7 @@ class DatabaseInputKDBX(database: DatabaseKDBX)
             }
 
             val inputStreamXml: InputStream = when (mDatabase.compressionAlgorithm) {
-                com.kunzisoft.keepass.database.element.database.CompressionAlgorithm.GZip -> GZIPInputStream(plainInputStream)
+                com.kunzisoft.keepass.database.element.database.CompressionAlgorithmEnum.GZip -> GZIPInputStream(plainInputStream)
                 else -> plainInputStream
             }
 

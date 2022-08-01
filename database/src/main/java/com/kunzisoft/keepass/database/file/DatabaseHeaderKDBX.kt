@@ -207,7 +207,7 @@ class DatabaseHeaderKDBX(private val databaseV4: DatabaseKDBX) : DatabaseHeader(
         }
 
         val flag = bytes4ToUInt(pbFlags)
-        if (flag.toKotlinLong() < 0 || flag.toKotlinLong() >= com.kunzisoft.keepass.database.element.database.CompressionAlgorithm.values().size) {
+        if (flag.toKotlinLong() < 0 || flag.toKotlinLong() >= com.kunzisoft.keepass.database.element.database.CompressionAlgorithmEnum.values().size) {
             throw IOException("Unrecognized compression flag.")
         }
 
@@ -253,17 +253,17 @@ class DatabaseHeaderKDBX(private val databaseV4: DatabaseKDBX) : DatabaseHeader(
         val FILE_VERSION_40 = UnsignedInt(0x00040000)
         val FILE_VERSION_41 = UnsignedInt(0x00040001)
 
-        fun getCompressionFromFlag(flag: UnsignedInt): com.kunzisoft.keepass.database.element.database.CompressionAlgorithm? {
+        fun getCompressionFromFlag(flag: UnsignedInt): com.kunzisoft.keepass.database.element.database.CompressionAlgorithmEnum? {
             return when (flag.toKotlinInt()) {
-                0 -> com.kunzisoft.keepass.database.element.database.CompressionAlgorithm.None
-                1 -> com.kunzisoft.keepass.database.element.database.CompressionAlgorithm.GZip
+                0 -> com.kunzisoft.keepass.database.element.database.CompressionAlgorithmEnum.None
+                1 -> com.kunzisoft.keepass.database.element.database.CompressionAlgorithmEnum.GZip
                 else -> null
             }
         }
 
-        fun getFlagFromCompression(compression: com.kunzisoft.keepass.database.element.database.CompressionAlgorithm): UnsignedInt {
+        fun getFlagFromCompression(compression: com.kunzisoft.keepass.database.element.database.CompressionAlgorithmEnum): UnsignedInt {
             return when (compression) {
-                com.kunzisoft.keepass.database.element.database.CompressionAlgorithm.GZip -> UnsignedInt(1)
+                com.kunzisoft.keepass.database.element.database.CompressionAlgorithmEnum.GZip -> UnsignedInt(1)
                 else -> UnsignedInt(0)
             }
         }

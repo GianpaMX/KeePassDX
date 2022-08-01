@@ -27,7 +27,7 @@ import com.kunzisoft.keepass.database.action.node.NodeHandler
 import com.kunzisoft.keepass.database.crypto.CrsAlgorithm
 import com.kunzisoft.keepass.database.crypto.kdf.KdfFactory
 import com.kunzisoft.keepass.database.element.*
-import com.kunzisoft.keepass.database.element.database.CompressionAlgorithm
+import com.kunzisoft.keepass.database.element.database.CompressionAlgorithmEnum
 import com.kunzisoft.keepass.database.element.database.DatabaseKDBX
 import com.kunzisoft.keepass.database.element.database.DatabaseKDBX.Companion.BASE_64_FLAG
 import com.kunzisoft.keepass.database.element.database.DatabaseVersioned
@@ -87,7 +87,7 @@ class DatabaseOutputKDBX(private val mDatabaseKDBX: DatabaseKDBX,
             val xmlOutputStream: OutputStream
             try {
                 xmlOutputStream = when(mDatabaseKDBX.compressionAlgorithm) {
-                    com.kunzisoft.keepass.database.element.database.CompressionAlgorithm.GZip -> GZIPOutputStream(osPlain)
+                    com.kunzisoft.keepass.database.element.database.CompressionAlgorithmEnum.GZip -> GZIPOutputStream(osPlain)
                     else -> osPlain
                 }
 

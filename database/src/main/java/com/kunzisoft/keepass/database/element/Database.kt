@@ -282,10 +282,10 @@ class Database {
     val allowDataCompression: Boolean
         get() = mDatabaseKDBX != null
 
-    val availableCompressionAlgorithms: List<com.kunzisoft.keepass.database.element.database.CompressionAlgorithm>
+    val availableCompressionAlgorithms: List<com.kunzisoft.keepass.database.element.database.CompressionAlgorithmEnum>
         get() = mDatabaseKDBX?.availableCompressionAlgorithms ?: ArrayList()
 
-    var compressionAlgorithm: com.kunzisoft.keepass.database.element.database.CompressionAlgorithm?
+    var compressionAlgorithm: com.kunzisoft.keepass.database.element.database.CompressionAlgorithmEnum?
         get() = mDatabaseKDBX?.compressionAlgorithm
         set(value) {
             value?.let {
@@ -300,14 +300,14 @@ class Database {
             return false
         // Default compression not necessary if stored in header
         mDatabaseKDBX?.let {
-            return it.compressionAlgorithm == com.kunzisoft.keepass.database.element.database.CompressionAlgorithm.GZip
+            return it.compressionAlgorithm == com.kunzisoft.keepass.database.element.database.CompressionAlgorithmEnum.GZip
                     && it.kdbxVersion.isBefore(FILE_VERSION_40)
         }
         return false
     }
 
-    fun updateDataBinaryCompression(oldCompression: com.kunzisoft.keepass.database.element.database.CompressionAlgorithm,
-                                    newCompression: com.kunzisoft.keepass.database.element.database.CompressionAlgorithm
+    fun updateDataBinaryCompression(oldCompression: com.kunzisoft.keepass.database.element.database.CompressionAlgorithmEnum,
+                                    newCompression: com.kunzisoft.keepass.database.element.database.CompressionAlgorithmEnum
     ) {
         mDatabaseKDBX?.changeBinaryCompression(oldCompression, newCompression)
         dataModifiedSinceLastLoading = true

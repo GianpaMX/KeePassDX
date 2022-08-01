@@ -26,6 +26,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.kunzisoft.keepass.R
 import com.kunzisoft.keepass.database.element.Database
 import com.kunzisoft.keepass.database.element.database.CompressionAlgorithm
+import com.kunzisoft.keepass.database.element.database.toAppEnum
 import com.kunzisoft.keepass.settings.preferencedialogfragment.adapter.ListRadioItemAdapter
 
 class DatabaseDataCompressionPreferenceDialogFragmentCompat
@@ -57,8 +58,8 @@ class DatabaseDataCompressionPreferenceDialogFragmentCompat
         mRecyclerView?.adapter = mCompressionAdapter
 
         database?.let {
-            compressionSelected = it.compressionAlgorithm
-            mCompressionAdapter?.setItems(it.availableCompressionAlgorithms, compressionSelected)
+            compressionSelected = it.compressionAlgorithm?.toAppEnum()
+            mCompressionAdapter?.setItems(it.availableCompressionAlgorithms.map { it.toAppEnum() }, compressionSelected)
         }
     }
 
@@ -69,10 +70,10 @@ class DatabaseDataCompressionPreferenceDialogFragmentCompat
                 if (compressionSelected != null) {
                     val newCompression = compressionSelected
                     val oldCompression = database.compressionAlgorithm
-                    database.compressionAlgorithm = newCompression
+                    database.compressionAlgorithm = newCompression?.toDatabaseEnum()
 
                     if (oldCompression != null && newCompression != null)
-                        saveCompression(oldCompression, newCompression)
+                        saveCompression(oldCompression.toAppEnum(), newCompression)
                 }
             }
         }
