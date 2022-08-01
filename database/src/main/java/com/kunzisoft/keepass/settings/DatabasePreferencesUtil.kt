@@ -7,23 +7,31 @@ import com.kunzisoft.keepass.timeout.TimeoutHelper
 
 object DatabasePreferencesUtil {
 
+    const val HIDE_EXPIRED_ENTRIES_KEY = "hide_expired_entries_key"
+    private const val HIDE_EXPIRED_ENTRIES_DEFAULT = false
+    const val SETTING_ICON_PACK_CHOOSE_KEY = "setting_icon_pack_choose_key"
+    private const val SETTING_ICON_PACK_CHOOSE_DEFAULT = "material"
+    const val SUBDOMAIN_SEARCH_KEY = "subdomain_search_key"
+    private const val SUBDOMAIN_SEARCH_DEFAULT = false
+    const val TIMEOUT_BACKUP_KEY = "timeout_backup_key"
+    const val APP_TIMEOUT_KEY = "app_timeout_key"
+    const val TIMEOUT_DEFAULT = "300000"
+
     fun showExpiredEntries(context: Context): Boolean {
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)
-        return ! prefs.getBoolean(context.getString(R.string.hide_expired_entries_key),
-            context.resources.getBoolean(R.bool.hide_expired_entries_default))
+        return ! prefs.getBoolean(HIDE_EXPIRED_ENTRIES_KEY, HIDE_EXPIRED_ENTRIES_DEFAULT)
     }
 
     fun getIconPackSelectedId(context: Context): String? {
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)
         return prefs.getString(
-            context.getString(R.string.setting_icon_pack_choose_key),
-            context.getString(R.string.setting_icon_pack_choose_default))
+            SETTING_ICON_PACK_CHOOSE_KEY,
+            SETTING_ICON_PACK_CHOOSE_DEFAULT)
     }
 
     fun searchSubdomains(context: Context): Boolean {
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)
-        return prefs.getBoolean(context.getString(R.string.subdomain_search_key),
-            context.resources.getBoolean(R.bool.subdomain_search_default))
+        return prefs.getBoolean(SUBDOMAIN_SEARCH_KEY, SUBDOMAIN_SEARCH_DEFAULT)
     }
 
     /**
@@ -31,7 +39,7 @@ object DatabasePreferencesUtil {
      */
     fun saveCurrentTime(context: Context) {
         PreferenceManager.getDefaultSharedPreferences(context).edit().apply {
-            putLong(context.getString(R.string.timeout_backup_key), System.currentTimeMillis())
+            putLong(TIMEOUT_BACKUP_KEY, System.currentTimeMillis())
             apply()
         }
     }
@@ -41,7 +49,7 @@ object DatabasePreferencesUtil {
      */
     fun getTimeSaved(context: Context): Long {
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)
-        return prefs.getLong(context.getString(R.string.timeout_backup_key),
+        return prefs.getLong(TIMEOUT_BACKUP_KEY,
             TimeoutHelper.NEVER)
     }
 
@@ -51,8 +59,7 @@ object DatabasePreferencesUtil {
     fun getAppTimeout(context: Context): Long {
         return try {
             val prefs = PreferenceManager.getDefaultSharedPreferences(context)
-            (prefs.getString(context.getString(R.string.app_timeout_key),
-                context.getString(R.string.timeout_default)) ?: "300000").toLong()
+            (prefs.getString(APP_TIMEOUT_KEY, TIMEOUT_DEFAULT) ?: TIMEOUT_DEFAULT).toLong()
         } catch (e: NumberFormatException) {
             TimeoutHelper.DEFAULT_TIMEOUT
         }

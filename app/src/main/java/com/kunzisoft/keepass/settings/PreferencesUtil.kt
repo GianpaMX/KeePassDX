@@ -16,6 +16,12 @@ import com.kunzisoft.keepass.database.search.SearchParameters
 import com.kunzisoft.keepass.education.Education
 import com.kunzisoft.keepass.magikeyboard.MagikeyboardService
 import com.kunzisoft.keepass.password.PassphraseGenerator
+import com.kunzisoft.keepass.settings.DatabasePreferencesUtil.APP_TIMEOUT_KEY
+import com.kunzisoft.keepass.settings.DatabasePreferencesUtil.HIDE_EXPIRED_ENTRIES_KEY
+import com.kunzisoft.keepass.settings.DatabasePreferencesUtil.SETTING_ICON_PACK_CHOOSE_KEY
+import com.kunzisoft.keepass.settings.DatabasePreferencesUtil.SUBDOMAIN_SEARCH_KEY
+import com.kunzisoft.keepass.settings.DatabasePreferencesUtil.TIMEOUT_BACKUP_KEY
+import com.kunzisoft.keepass.settings.DatabasePreferencesUtil.TIMEOUT_DEFAULT
 import com.kunzisoft.keepass.timeout.TimeoutHelper
 import com.kunzisoft.keepass.utils.UriUtil
 import java.util.*
@@ -377,7 +383,7 @@ object PreferencesUtil {
      */
     fun saveCurrentTime(context: Context) {
         PreferenceManager.getDefaultSharedPreferences(context).edit().apply {
-            putLong(context.getString(R.string.timeout_backup_key), System.currentTimeMillis())
+            putLong(TIMEOUT_BACKUP_KEY, System.currentTimeMillis())
             apply()
         }
     }
@@ -385,7 +391,7 @@ object PreferencesUtil {
     fun getClipboardTimeout(context: Context): Long {
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)
         return prefs.getString(context.getString(R.string.clipboard_timeout_key),
-            context.getString(R.string.clipboard_timeout_default))?.toLong()
+            TIMEOUT_DEFAULT)?.toLong()
             ?: TimeoutHelper.DEFAULT_TIMEOUT
     }
 
@@ -727,8 +733,8 @@ object PreferencesUtil {
                 context.getString(R.string.enable_auto_save_database_key) -> editor.putBoolean(name, value.toBoolean())
                 context.getString(R.string.enable_keep_screen_on_key) -> editor.putBoolean(name, value.toBoolean())
                 context.getString(R.string.auto_focus_search_key) -> editor.putBoolean(name, value.toBoolean())
-                context.getString(R.string.subdomain_search_key) -> editor.putBoolean(name, value.toBoolean())
-                context.getString(R.string.app_timeout_key) -> editor.putString(name, value.toLong().toString())
+                SUBDOMAIN_SEARCH_KEY -> editor.putBoolean(name, value.toBoolean())
+                APP_TIMEOUT_KEY -> editor.putString(name, value.toLong().toString())
                 context.getString(R.string.lock_database_screen_off_key) -> editor.putBoolean(name, value.toBoolean())
                 context.getString(R.string.lock_database_back_root_key) -> editor.putBoolean(name, value.toBoolean())
                 context.getString(R.string.lock_database_show_button_key) -> editor.putBoolean(name, value.toBoolean())
@@ -770,7 +776,7 @@ object PreferencesUtil {
 
                 context.getString(R.string.setting_style_key) -> setStyle(context, value)
                 context.getString(R.string.setting_style_brightness_key) -> editor.putString(name, value)
-                context.getString(R.string.setting_icon_pack_choose_key) -> editor.putString(name, value)
+                SETTING_ICON_PACK_CHOOSE_KEY -> editor.putString(name, value)
                 context.getString(R.string.show_entry_colors_key) -> editor.putBoolean(name, value.toBoolean())
                 context.getString(R.string.hide_password_key) -> editor.putBoolean(name, value.toBoolean())
                 context.getString(R.string.colorize_password_key) -> editor.putBoolean(name, value.toBoolean())
@@ -780,7 +786,7 @@ object PreferencesUtil {
                 context.getString(R.string.show_uuid_key) -> editor.putBoolean(name, value.toBoolean())
                 context.getString(R.string.list_size_key) -> editor.putString(name, value)
                 context.getString(R.string.monospace_font_fields_enable_key) -> editor.putBoolean(name, value.toBoolean())
-                context.getString(R.string.hide_expired_entries_key) -> editor.putBoolean(name, value.toBoolean())
+                HIDE_EXPIRED_ENTRIES_KEY -> editor.putBoolean(name, value.toBoolean())
                 context.getString(R.string.enable_education_screens_key) -> editor.putBoolean(name, value.toBoolean())
 
                 context.getString(R.string.password_generator_length_key) -> editor.putInt(name, value.toInt())
