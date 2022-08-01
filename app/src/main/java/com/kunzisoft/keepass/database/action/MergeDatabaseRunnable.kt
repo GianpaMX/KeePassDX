@@ -33,6 +33,8 @@ class MergeDatabaseRunnable(private val context: Context,
                             private val mDatabase: Database,
                             private val mDatabaseToMergeUri: Uri?,
                             private val mDatabaseToMergeMainCredential: MainCredential?,
+                            private val startKeyTimerMessage : Int,
+                            private val startContentTimerMessage : Int,
                             private val progressTaskUpdater: ProgressTaskUpdater?,
                             private val mLoadDatabaseResult: ((Result) -> Unit)?)
     : ActionRunnable() {
@@ -43,13 +45,16 @@ class MergeDatabaseRunnable(private val context: Context,
 
     override fun onActionRun() {
         try {
-            mDatabase.mergeData(mDatabaseToMergeUri,
-                mDatabaseToMergeMainCredential,
-                context.contentResolver,
-                { memoryWanted ->
+            mDatabase.mergeData(
+                databaseToMergeUri = mDatabaseToMergeUri,
+                databaseToMergeMainCredential = mDatabaseToMergeMainCredential,
+                contentResolver = context.contentResolver,
+                isRAMSufficient = { memoryWanted ->
                     BinaryData.canMemoryBeAllocatedInRAM(context, memoryWanted)
                 },
-                progressTaskUpdater
+                startKeyTimerMessage = startKeyTimerMessage,
+                startContentTimerMessage = startContentTimerMessage,
+                progressTaskUpdater = progressTaskUpdater
             )
         } catch (e: LoadDatabaseException) {
             setError(e)

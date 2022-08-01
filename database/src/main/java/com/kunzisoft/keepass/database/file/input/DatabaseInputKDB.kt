@@ -48,12 +48,14 @@ class DatabaseInputKDB(database: DatabaseKDB)
     : DatabaseInput<DatabaseKDB>(database) {
 
     @Throws(LoadDatabaseException::class)
-    override fun openDatabase(databaseInputStream: InputStream,
+    override fun openDatabase(startKeyTimerMessage : Int,
+                              startContentTimerMessage : Int,
+                              databaseInputStream: InputStream,
                               progressTaskUpdater: ProgressTaskUpdater?,
                               assignMasterKey: (() -> Unit)): DatabaseKDB {
 
         try {
-            startKeyTimer(progressTaskUpdater)
+            startKeyTimer(startKeyTimerMessage, progressTaskUpdater)
             // Load entire file, most of it's encrypted.
             val fileSize = databaseInputStream.available()
 
@@ -98,7 +100,7 @@ class DatabaseInputKDB(database: DatabaseKDB)
                     mDatabase.numberKeyEncryptionRounds)
 
             stopKeyTimer()
-            startContentTimer(progressTaskUpdater)
+            startContentTimer(startContentTimerMessage, progressTaskUpdater)
 
             val cipher: Cipher = try {
                 mDatabase.encryptionAlgorithm

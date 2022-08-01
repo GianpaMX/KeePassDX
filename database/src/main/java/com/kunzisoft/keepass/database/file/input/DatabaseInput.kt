@@ -27,7 +27,6 @@ import com.kunzisoft.keepass.tasks.ProgressTaskUpdater
 import java.io.InputStream
 
 abstract class DatabaseInput<D : DatabaseVersioned<*, *, *, *>> (protected var mDatabase: D) {
-
     private var startTimeKey = System.currentTimeMillis()
     private var startTimeContent = System.currentTimeMillis()
 
@@ -42,12 +41,14 @@ abstract class DatabaseInput<D : DatabaseVersioned<*, *, *, *>> (protected var m
      */
 
     @Throws(LoadDatabaseException::class)
-    abstract fun openDatabase(databaseInputStream: InputStream,
+    abstract fun openDatabase(startKeyTimerMessage : Int,
+                              startContentTimerMessage : Int,
+                              databaseInputStream: InputStream,
                               progressTaskUpdater: ProgressTaskUpdater?,
                               assignMasterKey: (() -> Unit)): D
 
-    protected fun startKeyTimer(progressTaskUpdater: ProgressTaskUpdater?) {
-        progressTaskUpdater?.updateMessage(R.string.retrieving_db_key)
+    protected fun startKeyTimer(startKeyTimerMessage : Int, progressTaskUpdater: ProgressTaskUpdater?) {
+        progressTaskUpdater?.updateMessage(startKeyTimerMessage)
         Log.d(TAG, "Start retrieving database key...")
         startTimeKey = System.currentTimeMillis()
     }
@@ -56,8 +57,8 @@ abstract class DatabaseInput<D : DatabaseVersioned<*, *, *, *>> (protected var m
         Log.d(TAG, "Stop retrieving database key... ${System.currentTimeMillis() - startTimeKey} ms")
     }
 
-    protected fun startContentTimer(progressTaskUpdater: ProgressTaskUpdater?) {
-        progressTaskUpdater?.updateMessage(R.string.decrypting_db)
+    protected fun startContentTimer(startContentTimerMessage : Int, progressTaskUpdater: ProgressTaskUpdater?) {
+        progressTaskUpdater?.updateMessage(startContentTimerMessage)
         Log.d(TAG, "Start decrypting database content...")
         startTimeContent = System.currentTimeMillis()
     }

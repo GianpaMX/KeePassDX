@@ -21,6 +21,7 @@ package com.kunzisoft.keepass.database.action
 
 import android.content.Context
 import android.net.Uri
+import com.kunzisoft.keepass.R
 import com.kunzisoft.keepass.app.database.CipherDatabaseAction
 import com.kunzisoft.keepass.app.database.FileDatabaseHistoryAction
 import com.kunzisoft.keepass.database.element.Database
@@ -52,15 +53,18 @@ class LoadDatabaseRunnable(private val context: Context,
     override fun onActionRun() {
         try {
             mDatabase.loadData(mUri,
-                    mMainCredential,
-                    mReadonly,
-                    context.contentResolver,
-                    UriUtil.getBinaryDir(context),
-                    { memoryWanted ->
-                        BinaryData.canMemoryBeAllocatedInRAM(context, memoryWanted)
-                    },
-                    mFixDuplicateUUID,
-                    progressTaskUpdater)
+                mainCredential = mMainCredential,
+                readOnly = mReadonly,
+                contentResolver = context.contentResolver,
+                cacheDirectory = UriUtil.getBinaryDir(context),
+                isRAMSufficient = { memoryWanted ->
+                    BinaryData.canMemoryBeAllocatedInRAM(context, memoryWanted)
+                },
+                fixDuplicateUUID = mFixDuplicateUUID,
+                startKeyTimerMessage = R.string.retrieving_db_key,
+                startContentTimerMessage = R.string.decrypting_db,
+                progressTaskUpdater = progressTaskUpdater
+            )
         }
         catch (e: LoadDatabaseException) {
             setError(e)

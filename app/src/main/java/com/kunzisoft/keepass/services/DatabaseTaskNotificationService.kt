@@ -622,11 +622,13 @@ open class DatabaseTaskNotificationService : LockNotificationService(), Progress
         }
 
         return MergeDatabaseRunnable(
-            this,
-            database,
-            databaseToMergeUri,
-            databaseToMergeMainCredential,
-            this
+            context = this,
+            mDatabase = database,
+            mDatabaseToMergeUri = databaseToMergeUri,
+            mDatabaseToMergeMainCredential = databaseToMergeMainCredential,
+            startKeyTimerMessage = R.string.retrieving_db_key,
+            startContentTimerMessage = R.string.decrypting_db,
+            progressTaskUpdater = this
         ) { result ->
             // No need to add each info to reload database
             result.data = Bundle()
@@ -635,9 +637,11 @@ open class DatabaseTaskNotificationService : LockNotificationService(), Progress
 
     private fun buildDatabaseReloadActionTask(database: Database): ActionRunnable {
         return ReloadDatabaseRunnable(
-                    this,
-                    database,
-                    this
+            context = this,
+            mDatabase = database,
+            startKeyTimerMessage = R.string.retrieving_db_key,
+            startContentTimerMessage = R.string.decrypting_db,
+            progressTaskUpdater = this
             ) { result ->
                 // No need to add each info to reload database
                 result.data = Bundle()

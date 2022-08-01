@@ -612,6 +612,8 @@ class Database {
                  cacheDirectory: File,
                  isRAMSufficient: (memoryWanted: Long) -> Boolean,
                  fixDuplicateUUID: Boolean,
+                 startKeyTimerMessage : Int,
+                 startContentTimerMessage : Int,
                  progressTaskUpdater: ProgressTaskUpdater?) {
 
         // Save database URI
@@ -636,8 +638,11 @@ class Database {
                             changeDuplicateId = fixDuplicateUUID
                         }
                         DatabaseInputKDB(databaseKDB)
-                            .openDatabase(databaseInputStream,
-                                progressTaskUpdater
+                            .openDatabase(
+                                startKeyTimerMessage = startKeyTimerMessage,
+                                startContentTimerMessage = startContentTimerMessage,
+                                databaseInputStream = databaseInputStream,
+                                progressTaskUpdater = progressTaskUpdater
                             ) {
                                 databaseKDB.retrieveMasterKey(
                                     mainCredential.masterPassword,
@@ -653,8 +658,11 @@ class Database {
                         }
                         DatabaseInputKDBX(databaseKDBX).apply {
                             setMethodToCheckIfRAMIsSufficient(isRAMSufficient)
-                            openDatabase(databaseInputStream,
-                                progressTaskUpdater) {
+                            openDatabase(
+                                startKeyTimerMessage = startKeyTimerMessage,
+                                startContentTimerMessage = startContentTimerMessage,
+                                databaseInputStream = databaseInputStream,
+                                progressTaskUpdater = progressTaskUpdater) {
                                 databaseKDBX.retrieveMasterKey(
                                     mainCredential.masterPassword,
                                     keyFileInputStream,
@@ -685,6 +693,8 @@ class Database {
                   databaseToMergeMainCredential: MainCredential?,
                   contentResolver: ContentResolver,
                   isRAMSufficient: (memoryWanted: Long) -> Boolean,
+                  startKeyTimerMessage : Int,
+                  startContentTimerMessage : Int,
                   progressTaskUpdater: ProgressTaskUpdater?) {
 
         mDatabaseKDB?.let {
@@ -711,7 +721,12 @@ class Database {
                     { databaseInputStream ->
                         val databaseToMergeKDB = DatabaseKDB()
                         DatabaseInputKDB(databaseToMergeKDB)
-                            .openDatabase(databaseInputStream, progressTaskUpdater) {
+                            .openDatabase(
+                                startKeyTimerMessage = startKeyTimerMessage,
+                                startContentTimerMessage = startContentTimerMessage,
+                                databaseInputStream = databaseInputStream,
+                                progressTaskUpdater = progressTaskUpdater
+                            ) {
                                 if (databaseToMergeMainCredential != null) {
                                     databaseToMergeKDB.retrieveMasterKey(
                                         databaseToMergeMainCredential.masterPassword,
@@ -727,7 +742,12 @@ class Database {
                         val databaseToMergeKDBX = DatabaseKDBX()
                         DatabaseInputKDBX(databaseToMergeKDBX).apply {
                             setMethodToCheckIfRAMIsSufficient(isRAMSufficient)
-                            openDatabase(databaseInputStream, progressTaskUpdater) {
+                            openDatabase(
+                                startKeyTimerMessage = startKeyTimerMessage,
+                                startContentTimerMessage = startContentTimerMessage,
+                                databaseInputStream = databaseInputStream,
+                                progressTaskUpdater = progressTaskUpdater
+                            ) {
                                 if (databaseToMergeMainCredential != null) {
                                     databaseToMergeKDBX.retrieveMasterKey(
                                         databaseToMergeMainCredential.masterPassword,
@@ -777,6 +797,8 @@ class Database {
     @Throws(LoadDatabaseException::class)
     fun reloadData(contentResolver: ContentResolver,
                    isRAMSufficient: (memoryWanted: Long) -> Boolean,
+                   startKeyTimerMessage : Int,
+                   startContentTimerMessage : Int,
                    progressTaskUpdater: ProgressTaskUpdater?) {
 
         // Retrieve the stream from the old database URI
@@ -790,7 +812,12 @@ class Database {
                             databaseKDB.binaryCache = it.binaryCache
                         }
                         DatabaseInputKDB(databaseKDB)
-                            .openDatabase(databaseInputStream, progressTaskUpdater) {
+                            .openDatabase(
+                                startKeyTimerMessage = startKeyTimerMessage,
+                                startContentTimerMessage = startContentTimerMessage,
+                                databaseInputStream = databaseInputStream,
+                                progressTaskUpdater = progressTaskUpdater
+                            ) {
                                 databaseKDB.masterKey = masterKey
                             }
                         databaseKDB
@@ -802,7 +829,12 @@ class Database {
                         }
                         DatabaseInputKDBX(databaseKDBX).apply {
                             setMethodToCheckIfRAMIsSufficient(isRAMSufficient)
-                            openDatabase(databaseInputStream, progressTaskUpdater) {
+                            openDatabase(
+                                startKeyTimerMessage = startKeyTimerMessage,
+                                startContentTimerMessage = startContentTimerMessage,
+                                databaseInputStream = databaseInputStream,
+                                progressTaskUpdater = progressTaskUpdater
+                            ) {
                                 databaseKDBX.masterKey = masterKey
                             }
                         }

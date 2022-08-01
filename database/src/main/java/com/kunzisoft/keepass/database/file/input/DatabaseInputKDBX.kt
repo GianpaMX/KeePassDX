@@ -100,11 +100,13 @@ class DatabaseInputKDBX(database: DatabaseKDBX)
     }
 
     @Throws(LoadDatabaseException::class)
-    override fun openDatabase(databaseInputStream: InputStream,
+    override fun openDatabase(startKeyTimerMessage : Int,
+                              startContentTimerMessage : Int,
+                              databaseInputStream: InputStream,
                               progressTaskUpdater: ProgressTaskUpdater?,
                               assignMasterKey: (() -> Unit)): DatabaseKDBX {
         try {
-            startKeyTimer(progressTaskUpdater)
+            startKeyTimer(startKeyTimerMessage, progressTaskUpdater)
 
             val header = DatabaseHeaderKDBX(mDatabase)
 
@@ -118,7 +120,7 @@ class DatabaseInputKDBX(database: DatabaseKDBX)
             mDatabase.makeFinalKey(header.masterSeed)
 
             stopKeyTimer()
-            startContentTimer(progressTaskUpdater)
+            startContentTimer(startContentTimerMessage, progressTaskUpdater)
 
             val cipher: Cipher
             try {

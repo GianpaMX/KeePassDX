@@ -30,6 +30,8 @@ import com.kunzisoft.keepass.utils.UriUtil
 
 class ReloadDatabaseRunnable(private val context: Context,
                              private val mDatabase: Database,
+                             private val startKeyTimerMessage : Int,
+                             private val startContentTimerMessage : Int,
                              private val progressTaskUpdater: ProgressTaskUpdater?,
                              private val mLoadDatabaseResult: ((Result) -> Unit)?)
     : ActionRunnable() {
@@ -42,11 +44,15 @@ class ReloadDatabaseRunnable(private val context: Context,
 
     override fun onActionRun() {
         try {
-            mDatabase.reloadData(context.contentResolver,
-                    { memoryWanted ->
-                        BinaryData.canMemoryBeAllocatedInRAM(context, memoryWanted)
-                    },
-                    progressTaskUpdater)
+            mDatabase.reloadData(
+                contentResolver = context.contentResolver,
+                isRAMSufficient = { memoryWanted ->
+                    BinaryData.canMemoryBeAllocatedInRAM(context, memoryWanted)
+                },
+                startKeyTimerMessage = startKeyTimerMessage,
+                startContentTimerMessage = startContentTimerMessage,
+                progressTaskUpdater = progressTaskUpdater
+            )
         } catch (e: LoadDatabaseException) {
             setError(e)
         }

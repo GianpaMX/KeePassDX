@@ -6,6 +6,7 @@ import com.kunzisoft.keepass.database.element.binary.BinaryData
 import com.kunzisoft.keepass.model.MainCredential
 import com.kunzisoft.keepass.tasks.ProgressTaskUpdater
 import com.kunzisoft.keepass.utils.UriUtil
+import com.kunzisoft.keepass.R
 import org.junit.Test
 import java.io.File
 import java.io.FileOutputStream
@@ -34,6 +35,8 @@ class DatabaseTest {
                 BinaryData.canMemoryBeAllocatedInRAM(context, memoryWanted)
             },
             fixDuplicateUUID = false,
+            startKeyTimerMessage = R.string.retrieving_db_key,
+            startContentTimerMessage = R.string.decrypting_db,
             progressTaskUpdater = object : ProgressTaskUpdater {
                 override fun updateMessage(resId: Int) {
                     log(context.getString(resId))
