@@ -19,11 +19,9 @@
  */
 package com.kunzisoft.keepass.database.element.database
 
-import android.content.res.Resources
 import android.util.Base64
 import android.util.Log
 import com.kunzisoft.encrypt.HashManager
-import com.kunzisoft.keepass.database.R
 import com.kunzisoft.keepass.database.action.node.NodeHandler
 import com.kunzisoft.keepass.database.crypto.EncryptionAlgorithm
 import com.kunzisoft.keepass.database.crypto.VariantDictionary
@@ -778,15 +776,15 @@ class DatabaseKDBX : DatabaseVersioned<UUID, UUID, GroupKDBX, EntryKDBX> {
      * Ensure that the recycle bin tree exists, if enabled and create it
      * if it doesn't exist
      */
-    fun ensureRecycleBinExists(resources: Resources) {
+    fun ensureRecycleBinExists(recycleBinTitle: String) {
         if (recycleBin == null) {
             // Create recycle bin only if a group with a valid name don't already exists
             val firstGroupWithValidName = getGroupIndexes().firstOrNull {
-                it.title == resources.getString(R.string.recycle_bin)
+                it.title == recycleBinTitle
             }
             val recycleBinGroup = if (firstGroupWithValidName == null) {
                 val newRecycleBinGroup = createGroup().apply {
-                    title = resources.getString(R.string.recycle_bin)
+                    title = recycleBinTitle
                     icon.standard = getStandardIcon(IconImageStandard.TRASH_ID)
                     enableAutoType = false
                     enableSearching = false

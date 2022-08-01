@@ -1,6 +1,7 @@
 package com.kunzisoft.keepass.database.action.node
 
 import android.content.Context
+import com.kunzisoft.keepass.R
 import com.kunzisoft.keepass.database.element.Database
 import com.kunzisoft.keepass.database.element.Entry
 import com.kunzisoft.keepass.database.element.Group
@@ -26,6 +27,7 @@ class DeleteNodesRunnable(context: Context,
             mOldParent = nodeToDelete.parent
             nodeToDelete.touch(modified = true, touchParents = true)
 
+            val recycleBinTitle = context.resources.getString(R.string.recycle_bin)
             when (nodeToDelete.type) {
                 Type.GROUP -> {
                     val groupToDelete = nodeToDelete as Group
@@ -34,7 +36,7 @@ class DeleteNodesRunnable(context: Context,
                     // Remove Node from parent
                     mCanRecycle = database.canRecycle(groupToDelete)
                     if (mCanRecycle) {
-                        database.recycle(groupToDelete, context.resources)
+                        database.recycle(groupToDelete, recycleBinTitle)
                         groupToDelete.setPreviousParentGroup(mOldParent)
                         groupToDelete.touch(modified = true, touchParents = true)
                     } else {
@@ -48,7 +50,7 @@ class DeleteNodesRunnable(context: Context,
                     // Remove Node from parent
                     mCanRecycle = database.canRecycle(entryToDelete)
                     if (mCanRecycle) {
-                        database.recycle(entryToDelete, context.resources)
+                        database.recycle(entryToDelete, recycleBinTitle)
                         entryToDelete.setPreviousParentGroup(mOldParent)
                         entryToDelete.touch(modified = true, touchParents = true)
                     } else {

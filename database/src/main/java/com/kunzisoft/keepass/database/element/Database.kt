@@ -461,10 +461,10 @@ class Database {
         // Backup is always enabled in KDB database
         get() = mDatabaseKDB != null || mDatabaseKDBX?.isRecycleBinEnabled ?: false
 
-    fun enableRecycleBin(enable: Boolean, resources: Resources) {
+    fun enableRecycleBin(enable: Boolean, recycleBinTitle: String) {
         mDatabaseKDBX?.isRecycleBinEnabled = enable
         if (enable) {
-            ensureRecycleBinExists(resources)
+            ensureRecycleBinExists(recycleBinTitle)
         } else {
             mDatabaseKDBX?.removeRecycleBin()
         }
@@ -1188,9 +1188,9 @@ class Database {
                 })
     }
 
-    fun ensureRecycleBinExists(resources: Resources) {
+    fun ensureRecycleBinExists(recycleBinTitle: String) {
         mDatabaseKDB?.ensureBackupExists()
-        mDatabaseKDBX?.ensureRecycleBinExists(resources)
+        mDatabaseKDBX?.ensureRecycleBinExists(recycleBinTitle)
     }
 
     fun canRecycle(entry: Entry): Boolean {
@@ -1215,8 +1215,8 @@ class Database {
         return canRecycle ?: false
     }
 
-    fun recycle(entry: Entry, resources: Resources) {
-        ensureRecycleBinExists(resources)
+    fun recycle(entry: Entry, recycleBinTitle: String) {
+        ensureRecycleBinExists(recycleBinTitle)
         entry.parent?.let { parent ->
             removeEntryFrom(entry, parent)
         }
@@ -1226,8 +1226,8 @@ class Database {
         entry.afterAssignNewParent()
     }
 
-    fun recycle(group: Group, resources: Resources) {
-        ensureRecycleBinExists(resources)
+    fun recycle(group: Group, recycleBinTitle: String) {
+        ensureRecycleBinExists(recycleBinTitle)
         group.parent?.let { parent ->
             removeGroupFrom(group, parent)
         }
