@@ -19,6 +19,7 @@
  */
 package com.kunzisoft.keepass.settings
 
+import android.content.res.Resources
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
@@ -249,9 +250,7 @@ class NestedDatabaseSettingsFragment : NestedSettingsFragment(), DatabaseRetriev
                 isEnabled = if (!mDatabaseReadOnly) {
                     setOnPreferenceChangeListener { _, newValue ->
                         val templatesEnabled = newValue as Boolean
-                        database.enableTemplates(templatesEnabled,
-                            TemplateEngine.getDefaultTemplateGroupName(resources)
-                        )
+                        database.enableTemplates(templatesEnabled, getDefaultTemplateGroupName())
                         refreshTemplatesGroup(database)
                         // Save the database if not in readonly mode
                         saveDatabase(mDatabaseAutoSaveEnabled)
@@ -332,6 +331,10 @@ class NestedDatabaseSettingsFragment : NestedSettingsFragment(), DatabaseRetriev
         mParallelismPref = findPreference<InputKdfNumberPreference>(getString(R.string.parallelism_key))?.apply {
             summary = database.parallelism.toString()
         }
+    }
+
+    private fun getDefaultTemplateGroupName(): String {
+        return resources.getString(R.string.templates)
     }
 
     private fun onCreateDatabaseMasterKeyPreference(database: Database) {
