@@ -48,8 +48,11 @@ import kotlin.collections.HashMap
 /**
  * Factory class who build database icons dynamically, can assign an icon of IconPack, or a custom icon to an ImageView with a tint
  */
-class IconDrawableFactory(private val retrieveBinaryCache : () -> BinaryCache?,
-                          private val retrieveCustomIconBinary : (iconId: UUID) -> BinaryData?) {
+class IconDrawableFactory(
+    private val iconPackChooser: InterfaceIconPackChooser,
+    private val retrieveBinaryCache: () -> BinaryCache?,
+    private val retrieveCustomIconBinary: (iconId: UUID) -> BinaryData?
+) {
 
     /** customIconMap
      * Cache for icon drawable.
@@ -83,7 +86,7 @@ class IconDrawableFactory(private val retrieveBinaryCache : () -> BinaryCache?,
                 return SuperDrawable(it)
             }
         }
-        val iconPack = IconPackChooser.getSelectedIconPack(context)
+        val iconPack = iconPackChooser.getSelectedIconPack(context)
         if (mCurrentIconPack != iconPack) {
             this.mCurrentIconPack = iconPack
             this.clearCache()

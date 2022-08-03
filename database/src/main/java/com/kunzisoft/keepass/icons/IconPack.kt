@@ -22,7 +22,6 @@ package com.kunzisoft.keepass.icons
 import android.content.res.Resources
 import android.util.SparseIntArray
 import com.kunzisoft.keepass.database.R
-import java.text.DecimalFormat
 import java.util.*
 
 /**
@@ -50,8 +49,7 @@ class IconPack(packageName: String, resources: Resources, resourceId: Int) {
      *
      * @return String id of the pack
      */
-    var id: String? = null
-        private set
+    val id: String?
     /**
      * Get the name of the IconPack
      *
@@ -69,12 +67,7 @@ class IconPack(packageName: String, resources: Resources, resourceId: Int) {
 
     init {
 
-        id = resources.getString(resourceId)
-        // If finish with a _ remove it
-        id?.let { idRes ->
-            if (idRes.lastIndexOf('_') == idRes.length - 1)
-                id = idRes.substring(0, idRes.length - 1)
-        }
+        id = resources.getString(resourceId).removeSuffix("_")
 
         // Build the list of icons
         var num = 0

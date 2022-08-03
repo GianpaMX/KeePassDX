@@ -7,6 +7,7 @@ import com.kunzisoft.keepass.model.MainCredential
 import com.kunzisoft.keepass.tasks.ProgressTaskUpdater
 import com.kunzisoft.keepass.utils.UriUtil
 import com.kunzisoft.keepass.R
+import com.kunzisoft.keepass.icons.IconPackChooser
 import org.junit.Test
 import java.io.File
 import java.io.FileOutputStream
@@ -23,7 +24,7 @@ class DatabaseTest {
         copyStreamToFile(inputStream, file)
         log("tmp file: ${file.absolutePath}")
 
-        val database = Database.getInstance()
+        val database = Database.getInstance(IconPackChooser)
         database.clearAndClose(context)
         database.loadData(
             uri = Uri.fromFile(file),

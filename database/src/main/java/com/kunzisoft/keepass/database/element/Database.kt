@@ -54,6 +54,7 @@ import com.kunzisoft.keepass.database.merge.DatabaseKDBXMerger
 import com.kunzisoft.keepass.database.search.SearchHelper
 import com.kunzisoft.keepass.database.search.SearchParameters
 import com.kunzisoft.keepass.icons.IconDrawableFactory
+import com.kunzisoft.keepass.icons.InterfaceIconPackChooser
 import com.kunzisoft.keepass.model.MainCredential
 import com.kunzisoft.keepass.tasks.ProgressTaskUpdater
 import com.kunzisoft.keepass.utils.SingletonHolder
@@ -63,7 +64,7 @@ import java.io.*
 import java.util.*
 
 
-class Database {
+class Database(private val iconPackChooser: InterfaceIconPackChooser) {
 
     // To keep a reference for specific methods provided by version
     private var mDatabaseKDB: DatabaseKDB? = null
@@ -77,8 +78,9 @@ class Database {
     var isReadOnly = false
 
     val iconDrawableFactory = IconDrawableFactory(
-            { binaryCache },
-            { iconId -> iconsManager.getBinaryForCustomIcon(iconId) }
+        iconPackChooser = iconPackChooser,
+        retrieveBinaryCache = { binaryCache },
+        retrieveCustomIconBinary = { iconId -> iconsManager.getBinaryForCustomIcon(iconId) }
     )
 
     var loaded = false
@@ -702,7 +704,7 @@ class Database {
         }
 
         // New database instance to get new changes
-        val databaseToMerge = Database()
+        val databaseToMerge = Database(iconPackChooser)
         databaseToMerge.fileUri = databaseToMergeUri ?: this.fileUri
 
         // Pass KeyFile Uri as InputStreams

@@ -14,8 +14,6 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
-
-        buildConfigField "String[]", "ICON_PACKS", "{\"classic\",\"material\"}"
     }
 
     buildTypes {
@@ -43,9 +41,6 @@ dependencies {
     // Apache Commons
     implementation 'commons-io:commons-io:2.8.0'
     implementation 'commons-codec:commons-codec:1.15'
-    // Icon pack
-    implementation project(path: ':icon-pack-classic')
-    implementation project(path: ':icon-pack-material')
 
     implementation project(path: ':crypto')
 
