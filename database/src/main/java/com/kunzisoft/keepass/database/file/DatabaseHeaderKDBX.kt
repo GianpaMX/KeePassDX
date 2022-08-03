@@ -25,6 +25,7 @@ import com.kunzisoft.keepass.database.crypto.VariantDictionary
 import com.kunzisoft.keepass.database.crypto.kdf.AesKdf
 import com.kunzisoft.keepass.database.crypto.kdf.KdfFactory
 import com.kunzisoft.keepass.database.crypto.kdf.KdfParameters
+import com.kunzisoft.keepass.database.element.database.CompressionAlgorithmEnum
 import com.kunzisoft.keepass.database.element.database.DatabaseKDBX
 import com.kunzisoft.keepass.database.exception.VersionDatabaseException
 import com.kunzisoft.keepass.stream.CopyInputStream
@@ -207,7 +208,7 @@ class DatabaseHeaderKDBX(private val databaseV4: DatabaseKDBX) : DatabaseHeader(
         }
 
         val flag = bytes4ToUInt(pbFlags)
-        if (flag.toKotlinLong() < 0 || flag.toKotlinLong() >= com.kunzisoft.keepass.database.element.database.CompressionAlgorithmEnum.values().size) {
+        if (flag.toKotlinLong() < 0 || flag.toKotlinLong() >= CompressionAlgorithmEnum.values().size) {
             throw IOException("Unrecognized compression flag.")
         }
 
@@ -253,17 +254,17 @@ class DatabaseHeaderKDBX(private val databaseV4: DatabaseKDBX) : DatabaseHeader(
         val FILE_VERSION_40 = UnsignedInt(0x00040000)
         val FILE_VERSION_41 = UnsignedInt(0x00040001)
 
-        fun getCompressionFromFlag(flag: UnsignedInt): com.kunzisoft.keepass.database.element.database.CompressionAlgorithmEnum? {
+        fun getCompressionFromFlag(flag: UnsignedInt): CompressionAlgorithmEnum? {
             return when (flag.toKotlinInt()) {
-                0 -> com.kunzisoft.keepass.database.element.database.CompressionAlgorithmEnum.None
-                1 -> com.kunzisoft.keepass.database.element.database.CompressionAlgorithmEnum.GZip
+                0 -> CompressionAlgorithmEnum.None
+                1 -> CompressionAlgorithmEnum.GZip
                 else -> null
             }
         }
 
-        fun getFlagFromCompression(compression: com.kunzisoft.keepass.database.element.database.CompressionAlgorithmEnum): UnsignedInt {
+        fun getFlagFromCompression(compression: CompressionAlgorithmEnum): UnsignedInt {
             return when (compression) {
-                com.kunzisoft.keepass.database.element.database.CompressionAlgorithmEnum.GZip -> UnsignedInt(1)
+                CompressionAlgorithmEnum.GZip -> UnsignedInt(1)
                 else -> UnsignedInt(0)
             }
         }

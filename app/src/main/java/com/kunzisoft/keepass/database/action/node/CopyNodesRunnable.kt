@@ -1,22 +1,39 @@
+/*
+ * Copyright 2019 Jeremy Jamet / Kunzisoft.
+ *     
+ * This file is part of KeePassDX.
+ *
+ *  KeePassDX is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  KeePassDX is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with KeePassDX.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ */
 package com.kunzisoft.keepass.database.action.node
 
 import android.content.Context
 import android.util.Log
-import com.kunzisoft.keepass.database.element.Database
-import com.kunzisoft.keepass.database.element.Entry
-import com.kunzisoft.keepass.database.element.Group
+import com.kunzisoft.keepass.database.element.*
 import com.kunzisoft.keepass.database.element.node.Node
 import com.kunzisoft.keepass.database.element.node.Type
 import com.kunzisoft.keepass.database.exception.CopyEntryDatabaseException
 import com.kunzisoft.keepass.database.exception.CopyGroupDatabaseException
 
 class CopyNodesRunnable constructor(
-    context: Context,
-    database: Database,
-    private val mNodesToCopy: List<Node>,
-    private val mNewParent: Group,
-    save: Boolean,
-    afterActionNodesFinish: AfterActionNodesFinish?)
+        context: Context,
+        database: Database,
+        private val mNodesToCopy: List<Node>,
+        private val mNewParent: Group,
+        save: Boolean,
+        afterActionNodesFinish: AfterActionNodesFinish?)
     : ActionNodeDatabaseRunnable(context, database, afterActionNodesFinish, save) {
 
     private var mEntriesCopied = ArrayList<Entry>()

@@ -87,7 +87,7 @@ class DatabaseOutputKDBX(private val mDatabaseKDBX: DatabaseKDBX,
             val xmlOutputStream: OutputStream
             try {
                 xmlOutputStream = when(mDatabaseKDBX.compressionAlgorithm) {
-                    com.kunzisoft.keepass.database.element.database.CompressionAlgorithmEnum.GZip -> GZIPOutputStream(osPlain)
+                    CompressionAlgorithmEnum.GZip -> GZIPOutputStream(osPlain)
                     else -> osPlain
                 }
 

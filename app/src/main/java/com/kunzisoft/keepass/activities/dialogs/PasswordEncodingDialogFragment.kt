@@ -70,8 +70,7 @@ class PasswordEncodingDialogFragment : DialogFragment() {
 
     interface Listener {
         fun onPasswordEncodingValidateListener(databaseUri: Uri?,
-                                               mainCredential: MainCredential
-        )
+                                               mainCredential: MainCredential)
     }
 
     companion object {
@@ -80,8 +79,7 @@ class PasswordEncodingDialogFragment : DialogFragment() {
         private const val MAIN_CREDENTIAL = "MAIN_CREDENTIAL"
 
         fun getInstance(databaseUri: Uri,
-                        mainCredential: MainCredential
-        ): SortDialogFragment {
+                        mainCredential: MainCredential): SortDialogFragment {
             val fragment = SortDialogFragment()
             fragment.arguments = Bundle().apply {
                 putParcelable(DATABASE_URI_KEY, databaseUri)

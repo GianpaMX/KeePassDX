@@ -32,7 +32,7 @@ open class AssignMainCredentialInDatabaseRunnable (
         database: Database,
         protected val mDatabaseUri: Uri,
         protected val mMainCredential: MainCredential)
-    : com.kunzisoft.keepass.database.action.SaveDatabaseRunnable(context, database, true) {
+    : SaveDatabaseRunnable(context, database, true) {
 
     private var mBackupKey: ByteArray? = null
 

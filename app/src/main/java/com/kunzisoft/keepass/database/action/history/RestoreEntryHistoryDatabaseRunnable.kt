@@ -1,3 +1,22 @@
+/*
+ * Copyright 2020 Jeremy Jamet / Kunzisoft.
+ *     
+ * This file is part of KeePassDX.
+ *
+ *  KeePassDX is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  KeePassDX is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with KeePassDX.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ */
 package com.kunzisoft.keepass.database.action.history
 
 import android.content.Context
@@ -7,11 +26,11 @@ import com.kunzisoft.keepass.database.element.Entry
 import com.kunzisoft.keepass.tasks.ActionRunnable
 
 class RestoreEntryHistoryDatabaseRunnable (
-    private val context: Context,
-    private val database: Database,
-    private val mainEntry: Entry,
-    private val entryHistoryPosition: Int,
-    private val saveDatabase: Boolean)
+        private val context: Context,
+        private val database: Database,
+        private val mainEntry: Entry,
+        private val entryHistoryPosition: Int,
+        private val saveDatabase: Boolean)
     : ActionRunnable() {
 
     private var updateEntryRunnable: UpdateEntryRunnable? = null
@@ -24,14 +43,12 @@ class RestoreEntryHistoryDatabaseRunnable (
                 historyToRestore.addEntryToHistory(it)
             }
             // Update the entry with the fresh formatted entry to restore
-            updateEntryRunnable = UpdateEntryRunnable(
-                context,
-                database,
-                mainEntry,
-                historyToRestore,
-                saveDatabase,
-                null
-            )
+            updateEntryRunnable = UpdateEntryRunnable(context,
+                    database,
+                    mainEntry,
+                    historyToRestore,
+                    saveDatabase,
+                    null)
 
             updateEntryRunnable?.onStartRun()
 

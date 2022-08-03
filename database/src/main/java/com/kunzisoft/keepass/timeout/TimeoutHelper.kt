@@ -1,3 +1,22 @@
+/*
+ * Copyright 2019 Jeremy Jamet / Kunzisoft.
+ *
+ * This file is part of KeePassDX.
+ *
+ *  KeePassDX is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  KeePassDX is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with KeePassDX.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ */
 package com.kunzisoft.keepass.timeout
 
 import android.app.AlarmManager
@@ -7,6 +26,7 @@ import android.content.Intent
 import android.os.Build
 import android.util.Log
 import com.kunzisoft.keepass.settings.DatabasePreferencesUtil
+import com.kunzisoft.keepass.utils.LOCK_ACTION
 
 object TimeoutHelper {
 
@@ -25,7 +45,7 @@ object TimeoutHelper {
         return PendingIntent.getBroadcast(
             context.applicationContext,
             REQUEST_ID,
-            Intent(com.kunzisoft.keepass.utils.LOCK_ACTION),
+            Intent(LOCK_ACTION),
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_CANCEL_CURRENT
             } else {
@@ -130,7 +150,7 @@ object TimeoutHelper {
         if (diff >= appTimeout) {
             // We have timed out
             timeoutAction?.invoke()
-            context.sendBroadcast(Intent(com.kunzisoft.keepass.utils.LOCK_ACTION))
+            context.sendBroadcast(Intent(LOCK_ACTION))
             return false
         }
         return true
@@ -141,7 +161,7 @@ object TimeoutHelper {
      */
     fun checkTimeAndLockIfTimeout(context: Context): Boolean {
         return checkTime(context) {
-            context.sendBroadcast(Intent(com.kunzisoft.keepass.utils.LOCK_ACTION))
+            context.sendBroadcast(Intent(LOCK_ACTION))
         }
     }
 

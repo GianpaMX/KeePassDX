@@ -178,7 +178,7 @@ class DatabaseInputKDBX(database: DatabaseKDBX)
             }
 
             val inputStreamXml: InputStream = when (mDatabase.compressionAlgorithm) {
-                com.kunzisoft.keepass.database.element.database.CompressionAlgorithmEnum.GZip -> GZIPInputStream(plainInputStream)
+                CompressionAlgorithmEnum.GZip -> GZIPInputStream(plainInputStream)
                 else -> plainInputStream
             }
 

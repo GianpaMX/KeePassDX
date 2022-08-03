@@ -124,7 +124,7 @@ class DatabaseKDBX : DatabaseVersioned<UUID, UUID, GroupKDBX, EntryKDBX> {
         KdfFactory.argon2idKdf
     )
 
-    var compressionAlgorithm = com.kunzisoft.keepass.database.element.database.CompressionAlgorithmEnum.GZip
+    var compressionAlgorithm = CompressionAlgorithmEnum.GZip
 
     private val mFieldReferenceEngine = FieldReferencesEngine(this)
     private val mTemplateEngine = TemplateEngineCompatible(this)
@@ -264,20 +264,20 @@ class DatabaseKDBX : DatabaseVersioned<UUID, UUID, GroupKDBX, EntryKDBX> {
         }
     }
 
-    val availableCompressionAlgorithms: List<com.kunzisoft.keepass.database.element.database.CompressionAlgorithmEnum> = listOf(
-        com.kunzisoft.keepass.database.element.database.CompressionAlgorithmEnum.None,
-        com.kunzisoft.keepass.database.element.database.CompressionAlgorithmEnum.GZip
+    val availableCompressionAlgorithms: List<CompressionAlgorithmEnum> = listOf(
+        CompressionAlgorithmEnum.None,
+        CompressionAlgorithmEnum.GZip
     )
 
-    fun changeBinaryCompression(oldCompression: com.kunzisoft.keepass.database.element.database.CompressionAlgorithmEnum,
-                                newCompression: com.kunzisoft.keepass.database.element.database.CompressionAlgorithmEnum
+    fun changeBinaryCompression(oldCompression: CompressionAlgorithmEnum,
+                                newCompression: CompressionAlgorithmEnum
     ) {
         when (oldCompression) {
-            com.kunzisoft.keepass.database.element.database.CompressionAlgorithmEnum.None -> {
+            CompressionAlgorithmEnum.None -> {
                 when (newCompression) {
-                    com.kunzisoft.keepass.database.element.database.CompressionAlgorithmEnum.None -> {
+                    CompressionAlgorithmEnum.None -> {
                     }
-                    com.kunzisoft.keepass.database.element.database.CompressionAlgorithmEnum.GZip -> {
+                    CompressionAlgorithmEnum.GZip -> {
                         // Only in databaseV3.1, in databaseV4 the header is zipped during the save
                         if (kdbxVersion.isBefore(FILE_VERSION_40)) {
                             compressAllBinaries()
@@ -285,14 +285,14 @@ class DatabaseKDBX : DatabaseVersioned<UUID, UUID, GroupKDBX, EntryKDBX> {
                     }
                 }
             }
-            com.kunzisoft.keepass.database.element.database.CompressionAlgorithmEnum.GZip -> {
+            CompressionAlgorithmEnum.GZip -> {
                 // In databaseV4 the header is zipped during the save, so not necessary here
                 if (kdbxVersion.isBefore(FILE_VERSION_40)) {
                     when (newCompression) {
-                        com.kunzisoft.keepass.database.element.database.CompressionAlgorithmEnum.None -> {
+                        CompressionAlgorithmEnum.None -> {
                             decompressAllBinaries()
                         }
-                        com.kunzisoft.keepass.database.element.database.CompressionAlgorithmEnum.GZip -> {
+                        CompressionAlgorithmEnum.GZip -> {
                         }
                     }
                 } else {
