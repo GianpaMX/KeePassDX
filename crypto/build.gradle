@@ -2,16 +2,23 @@ plugins {
     id 'com.android.library'
     id 'kotlin-android'
     id 'kotlin-kapt'
+    id 'maven-publish'
 }
 
 android {
     compileSdkVersion 32
     buildToolsVersion "32.0.0"
 
+    namespace = 'com.kunzisoft.encrypt'
+
     defaultConfig {
         minSdkVersion 15
         targetSdkVersion 32
         multiDexEnabled true
+
+        aarMetadata {
+            minCompileSdk = 31
+        }
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -36,17 +43,34 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+
+    publishing {
+        singleVariant('release') {
+            withSourcesJar()
+        }
+    }
 }
 
 dependencies {
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    implementation "androidx.core:core-ktx:$android_core_version"
-    implementation "androidx.appcompat:appcompat:$android_appcompat_version"
-    implementation "com.google.android.material:material:$android_material_version"
     // Crypto
     implementation 'org.bouncycastle:bcprov-jdk15on:1.70'
 
     androidTestImplementation "androidx.test:runner:$android_test_version"
     androidTestImplementation "androidx.test:rules:$android_test_version"
+}
+
+publishing {
+    publications {
+        release(MavenPublication) {
+            groupId = 'com.github.GianpaMX.KeePassDX'
+            artifactId = 'crypto'
+            version = System.getenv("VERSION") ?: '0.0.1'
+
+            afterEvaluate {
+                from components.release
+            }
+        }
+    }
 }
