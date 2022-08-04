@@ -1,0 +1,6 @@
+jdk:
+  - openjdk11
+before_install:
+   - ./gradlew :crypto:build
+install:
+   - ./gradlew :crypto:publishToMavenLocal
