@@ -1,6 +1,6 @@
 jdk:
   - openjdk11
 before_install:
-   - ./gradlew :crypto:build
+   - ./gradlew :crypto:build :database:build
 install:
-   - ./gradlew :crypto:publishToMavenLocal
+   - ./gradlew :crypto:publishToMavenLocal :database:publishToMavenLocal
